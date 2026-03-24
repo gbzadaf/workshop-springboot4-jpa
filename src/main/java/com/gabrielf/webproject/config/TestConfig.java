@@ -1,14 +1,8 @@
 package com.gabrielf.webproject.config;
 
-import com.gabrielf.webproject.entities.Category;
-import com.gabrielf.webproject.entities.Order;
-import com.gabrielf.webproject.entities.Product;
-import com.gabrielf.webproject.entities.User;
+import com.gabrielf.webproject.entities.*;
 import com.gabrielf.webproject.entities.enums.OrderStatus;
-import com.gabrielf.webproject.repositories.CategoryRepository;
-import com.gabrielf.webproject.repositories.OrderRepository;
-import com.gabrielf.webproject.repositories.ProductRepository;
-import com.gabrielf.webproject.repositories.UserRepository;
+import com.gabrielf.webproject.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +26,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
 
     @Override
@@ -72,5 +69,12 @@ public class TestConfig implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
+        OrderItem oi1 = new OrderItem(o1, p1, p1.getPrice(), 2);
+        OrderItem oi2 = new OrderItem(o1, p3, p3.getPrice(), 1);
+        OrderItem oi3 = new OrderItem(o2, p3, p3.getPrice(), 2);
+        OrderItem oi4 = new OrderItem(o3, p5, p5.getPrice(), 2);
+
+        orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
     }
 }
