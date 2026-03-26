@@ -4,6 +4,7 @@ import com.gabrielf.webproject.Services.exceptions.DataBaseException;
 import com.gabrielf.webproject.Services.exceptions.ResourceNotFoundException;
 import com.gabrielf.webproject.entities.User;
 import com.gabrielf.webproject.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -44,9 +45,14 @@ public class UserService {
         }
 
         public User update(Long id, User obj) {
+        try {
+
             User entity = repository.getReferenceById(id);
             updateData(entity, obj);
             return repository.save(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
 
         }
 
