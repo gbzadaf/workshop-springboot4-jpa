@@ -1,5 +1,6 @@
 package com.gabrielf.webproject.Services;
 
+import com.gabrielf.webproject.Services.exceptions.ResourceNotFoundException;
 import com.gabrielf.webproject.entities.User;
 import com.gabrielf.webproject.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class UserService {
 
     public User findById(Long id) {
         Optional<User> obj = repository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
        public User insert(User obj) {
